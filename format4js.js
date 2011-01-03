@@ -966,16 +966,16 @@
         var index = this.count;
         if (g1 && g1 == '<') {
             index = this.previous;
-        } else if (g2) {
+        } else if (g2 && g2.length != 0) {
             index = g2 - 1;
         } else if (g6 != '%' && g6 != '\n'){
             this.count++;
         }
         this.previous = index;
 
-        var flags = (g3.length != 0) ? this.parseFlags(g3) : {};
-        var width = (g4.length != 0) ? g4 : -1;
-        var precision = (g5.length != 0) ? parseInt(g5.substring(1, g5.length)) : -1;
+        var flags = (g3 && g3.length != 0) ? this.parseFlags(g3) : {};
+        var width = (g4 && g4.length != 0) ? g4 : -1;
+        var precision = (g5 && g5.length != 0) ? parseInt(g5.substring(1, g5.length)) : -1;
         var conversion = g6;
 
         var replaced = '';
