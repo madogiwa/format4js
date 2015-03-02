@@ -209,11 +209,15 @@ test('eE - decimal number in computerized scientific notation', function() {
 });
 
 test('f - float', function() {
-    expect(12);
+    expect(15);
 
     equals( jQuery.format('%f', 10.5), '10.500000' );
     equals( jQuery.format('%f', -10.5), '-10.500000' );
     equals( jQuery.format('%03.3f', 10.25678), '10.257' );
+    // float rounding issue
+    equals( jQuery.format('%03.2f', 10.025678), '10.03' );
+    equals( jQuery.format('%03.2f', 10.085678), '10.09' );
+    equals( jQuery.format('%03.2f', 10.0000085678), '10.00' );
 
     // format
     equals( jQuery.format('%10f', 10.5), ' 10.500000' );

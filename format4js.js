@@ -722,6 +722,7 @@
             floatingPart = floatingPart.substring(0, precision) + '.' +
                 floatingPart.substring(precision, precision + 1);
             floatingPart = Math.round(floatingPart).toString();
+            floatingPart = paddingLeft(floatingPart, '0', precision);
         } else if (len < precision) {
             floatingPart = paddingRight(floatingPart, '0', precision);
         }
