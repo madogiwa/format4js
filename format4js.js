@@ -14,7 +14,29 @@
     /*
      * Public interface
      */
-    if (typeof mdgw != 'undefined') {    // standalone
+
+    // "fmt".format(args...)
+    if (typeof String.prototype.format == 'undefined') {
+        String.prototype.format = function() {
+            var args = Array.prototype.slice.apply(arguments).slice(0);
+
+            var formatter = new Formatter();
+            return formatter.doFormat(this, args);
+        }
+    }
+
+    // String.format("fmt", args...)
+    if (typeof String.format == 'undefined') {
+        String.format = function(fmt) {
+            var args = Array.prototype.slice.apply(arguments).slice(1);
+
+            var formatter = new Formatter();
+            return formatter.doFormat(fmt, args);
+        }
+    }
+
+    // mdgw.format("fmt", args...)
+    if (typeof mdgw != 'undefined') {
         mdgw.format = function(fmt) {
             var args = Array.prototype.slice.apply(arguments).slice(1);
 
@@ -23,7 +45,8 @@
         }
     }
 
-    if (typeof jQuery != 'undefined') {    // jQuery plugin
+    // $.format("fmt", args...)
+    if (typeof jQuery != 'undefined') {
         jQuery.extend({
             format: function(fmt) {
                 return mdgw.format.apply(this, arguments);
@@ -873,7 +896,7 @@
     /*
      * class LiteralConverter
      */
-    var LiteralConverter = function() {  
+    var LiteralConverter = function() {
     };
 
     LiteralConverter.prototype = new NoArgumentConverter();
@@ -890,7 +913,7 @@
     /*
      * class LineSeparatorConverter
      */
-    var LineSeparatorConverter = function() {  
+    var LineSeparatorConverter = function() {
     };
 
     LineSeparatorConverter.prototype = new NoArgumentConverter();
@@ -943,7 +966,7 @@
         'T': new DateAndTimeConverter(true)
     };
 
-    
+
     /*
      * class Formatter
      */

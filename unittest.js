@@ -7,10 +7,12 @@
  */
 
 test('interfaces', function() {
-    expect(2);
+    expect(4);
 
     equals( mdgw.format('%d', 5), jQuery.format('%d', 5) );
     notEqual( mdgw.format('%d', 5), jQuery.format('%d', -5) );
+    equals( mdgw.format('%d', 5), '%d'.format(5) );
+    equals( mdgw.format('%d', 5), String.format('%d', 5) );
 });
 
 test('no conversion', function() {
@@ -205,7 +207,7 @@ test('eE - decimal number in computerized scientific notation', function() {
 
     // surroundNegative
     equals( jQuery.format("%(15e", -1000.0), " (1.000000e+03)" );
-    
+
 });
 
 test('f - float', function() {
@@ -272,7 +274,7 @@ test('gG - computerized scientific notation or decimal format', function() {
 
     // surroundNegative
     equals( jQuery.format("%(10g", -3.14159), " (3.14159)" );
-    
+
 });
 
 test('aA - hexadecimal floating-point number', function() {
