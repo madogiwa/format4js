@@ -1,11 +1,11 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.Test;
+import org.junit.runner.JUnitCore;
 
 import java.util.Date;
 import java.util.Locale;
 
-import org.junit.Test;
-import org.junit.runner.JUnitCore;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.Assert.*;
 
 /**
  * @author Hidenori Sugiyama
@@ -26,14 +26,14 @@ public class FormatTest {
 	@Test
 	public void testArgument() {
 		assertEquals( String.format("%1$d %d %<d %1$d %d %<d", 1, 2, 3, 4), "1 1 1 1 2 2" );
-	    assertEquals( String.format("%d %% %d", 1, 2, 3), "1 % 2" );
+		assertEquals( String.format("%d %% %d", 1, 2, 3), "1 % 2" );
 
-	    try {
-	    	String.format("%<d", 1);
-	    	fail("");
-	    } catch (Exception e) {
-			System.out.println(e.toString());
-	    }
+		try {
+			String.format("%<d", 1);
+			fail("Exception is Expected");
+		} catch (Exception e) {
+			assertThat(e, instanceOf(Exception.class));
+		}
 	}
 
 	@Test
@@ -52,9 +52,9 @@ public class FormatTest {
 
 		try {
 			String.format("%#b", false);
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 	}
 
@@ -66,13 +66,19 @@ public class FormatTest {
 		// format
 		assertEquals(String.format("%7s", "hello"), "  hello");
 		assertEquals(String.format("%-7s", "hello"), "hello  ");
-		assertEquals(String.format("%#7s", "hello"), "  hello");
+
+		try {
+			assertEquals(String.format("%#7s", "hello"), "  hello");
+			fail("Exception is Expected");
+		} catch (Exception e) {
+			assertThat(e, instanceOf(Exception.class));
+		}
 
 		try {
 			String.format("%-+");
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 	}
 
@@ -81,8 +87,13 @@ public class FormatTest {
 		assertEquals(String.format("%c", 'h'), "h");
 		assertEquals(String.format("%C", 'h'), "H");
 
-		// original
-		//assertEquals(String.format("%C", "hello"), "H");
+		// illegal format conversion
+		try {
+			String.format("%C", "hello");
+			fail("Exception is Expected");
+		} catch (Exception e) {
+			assertThat(e, instanceOf(Exception.class));
+		}
 
 		// format
 		assertEquals(String.format("%5c", 'x'), "    x");
@@ -90,17 +101,17 @@ public class FormatTest {
 
 		try {
 			String.format("%#5c", 'x');
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e){
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 		// exception
 		try {
 			String.format("%c", "hello");
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 	}
 
@@ -109,8 +120,13 @@ public class FormatTest {
 		assertEquals(String.format("%d", 10), "10");
 		assertEquals(String.format("%03d", 10), "010");
 
-		// original
-		//assertEquals(String.format("%d", 10.5), "10");
+		// illegal format conversion
+		try {
+			String.format("%d", 10.5);
+			fail("Exception is Expected");
+		} catch (Exception e) {
+			assertThat(e, instanceOf(Exception.class));
+		}
 
 		// format
 		assertEquals(String.format("%5d", 10), "   10");
@@ -118,8 +134,9 @@ public class FormatTest {
 
 		try {
 			String.format("%#5d", 10);
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 		// signPlus
@@ -144,9 +161,9 @@ public class FormatTest {
 		// combination
 		try {
 			String.format("%+ d", 10);
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 	}
@@ -167,33 +184,33 @@ public class FormatTest {
 		// signPlus
 		try {
 			String.format("%+5o", 10);
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 		// singSpace
 		try {
 			String.format("% -5o", 10);
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 		// groupSeparator
 		try {
 			String.format("%,5o", 10);
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 		// surroundNegative
 		try {
 			String.format("%(5o", 10);
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 	}
@@ -212,17 +229,17 @@ public class FormatTest {
 		// signPlus
 		try {
 			String.format("%+5x", 10);
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 		// singSpace
 		try {
 			String.format("% -5x", 10);
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 		// zeroPadding
@@ -231,17 +248,17 @@ public class FormatTest {
 		// groupSeparator
 		try {
 			String.format("%,5x", 10);
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 		// surroundNegative
 		try {
 			String.format("%(5x", 10);
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 	}
@@ -269,9 +286,9 @@ public class FormatTest {
 	    // groupSeparator
 	    try {
 	    	String.format("%,15e", 1000.0);
-	    	fail("");
+			fail("Exception is Expected");
 	    } catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 	    }
 
 	    // surroundNegative
@@ -283,6 +300,11 @@ public class FormatTest {
 		assertEquals(String.format("%f", 10.5), "10.500000");
 		assertEquals(String.format("%f", -10.5), "-10.500000");
 		assertEquals(String.format("%03.3f", 10.25678), "10.257");
+
+        // float rounding issue
+		assertEquals(String.format("%03.2f", 10.025678), "10.03");
+		assertEquals(String.format("%03.2f", 10.085678), "10.09");
+		assertEquals(String.format("%03.2f", 10.0000085678), "10.00");
 
 		// format
 		assertEquals(String.format("%10f", 10.5), " 10.500000");
@@ -321,9 +343,9 @@ public class FormatTest {
 
 		try {
 			String.format("%#8g", 3.14159);
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 	    // signPlus
@@ -365,16 +387,17 @@ public class FormatTest {
 	    // groupSeparator
 	    try {
 	    	String.format("%,22a", 3.14159);
-	    	fail("");
+			fail("Exception is Expected");
 	    } catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 	    }
 
 	    // surroundNegative
 	    try {
 		    String.format("%(22a", -3.14159);
+			fail("Exception is Expected");
 	    } catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 	    }
 	}
 
@@ -485,16 +508,16 @@ public class FormatTest {
 		// format
 		try {
 			assertEquals(String.format("%5n", true), "    \n");
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 
 		try {
 			assertEquals(String.format("%-5n", 10), "\n    ");
-			fail("");
+			fail("Exception is Expected");
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			assertThat(e, instanceOf(Exception.class));
 		}
 	}
 }

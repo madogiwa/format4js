@@ -72,10 +72,12 @@ test('sS - string', function() {
 });
 
 test('cC - character', function() {
-    expect(6);
+    expect(7);
 
     equals( jQuery.format('%c', 'h'), 'h' );
     equals( jQuery.format('%C', 'h'), 'H' );
+
+    raises(function(){ jQuery.format('%C', 'hello'); });
 
     // format
     equals( jQuery.format('%5c', 'x'), '    x' );
@@ -92,8 +94,10 @@ test('d - decimal integer', function() {
     equals( jQuery.format('%d', 10), '10' );
     equals( jQuery.format('%03d', 10), '010' );
 
-    // original
-    equals( jQuery.format('%d', 10.5), '10');
+    // illegal format conversion
+    // raises(function(){ jQuery.format('%d', 10.5); });
+    // original behaviour
+    equals( jQuery.format('%d', 10.5), '10' );
 
     // format
     equals( jQuery.format('%5d', 10), '   10' );
@@ -216,7 +220,8 @@ test('f - float', function() {
     equals( jQuery.format('%f', 10.5), '10.500000' );
     equals( jQuery.format('%f', -10.5), '-10.500000' );
     equals( jQuery.format('%03.3f', 10.25678), '10.257' );
-    // float rounding issue
+
+	// float rounding issue
     equals( jQuery.format('%03.2f', 10.025678), '10.03' );
     equals( jQuery.format('%03.2f', 10.085678), '10.09' );
     equals( jQuery.format('%03.2f', 10.0000085678), '10.00' );
@@ -252,7 +257,7 @@ test('gG - computerized scientific notation or decimal format', function() {
 
     equals( jQuery.format("%g", 100000.1), "100000" );
     equals( jQuery.format("%g", 1000000000.1), "1.00000e+09" );
-	equals( jQuery.format("%.10g", 1000000000.1), "1000000000" );
+    equals( jQuery.format("%.10g", 1000000000.1), "1000000000" );
 
     // format
     equals( jQuery.format('%8g', 3.14159), ' 3.14159' );
@@ -298,8 +303,12 @@ test('aA - hexadecimal floating-point number', function() {
     // zeroPadding
     equals( jQuery.format("%022a", 3.14159), "0x0001.921f9f01b866ep1" );
 
+    // groupSeparator
     raises(function(){ jQuery.format("%,22a", 3.14159); });
+
+    // surroundNegative
     raises(function(){ jQuery.format("%(22a", -3.14159); });
+
 });
 
 test('tT - date and time (foundamental)', function() {
@@ -318,12 +327,16 @@ test('tT - date and time (foundamental)', function() {
     equals( jQuery.format('%tS', date), '06' );
 
     equals( jQuery.format('%tL', date), '098' );
+
+    // original behaviour - timezone is not supported
     raises(function(){ jQuery.format('%tN', date) });
 
     equals( jQuery.format('%tp', date), 'am' );
     equals( jQuery.format('%Tp', date2), 'PM' );
 
     equals( jQuery.format('%tz', date), '+0900' );
+
+    // original behaviour - timezone is not supported
     raises(function(){ jQuery.format('%tZ', date) });
 
     equals( jQuery.format('%ts', date), '368219106' );
@@ -370,6 +383,7 @@ test('tT - date and time (composition)', function() {
     equals( jQuery.format('%tD', date), '09/02/81' );
     equals( jQuery.format('%tF', date), '1981-09-02' );
 
+    // original behaviour - timezone is not supported
     raises(function(){ jQuery.format('%tc', date) });
 
     // format
