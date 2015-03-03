@@ -615,7 +615,11 @@
     };
 
     AbstractFloatConverter.prototype.formatAlternateForm = function(str) {
-        return str;
+        if (str.indexOf('.') == -1) {
+            return str + '.';
+        } else {
+            return str;
+        }
     };
 
     AbstractFloatConverter.prototype.formatSignPlus = function(str, num) {

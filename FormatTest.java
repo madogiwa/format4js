@@ -274,7 +274,7 @@ public class FormatTest {
 		assertEquals(String.format("%#16e", 1000.0), "    1.000000e+03");
 		assertEquals(String.format("%#16e", 1000.5), "    1.000500e+03");
 
-	    // signPlus
+		// signPlus
 	    assertEquals( String.format("%+15e", 1000.0), "  +1.000000e+03" );
 
 	    // singSpace
@@ -309,10 +309,13 @@ public class FormatTest {
 		// format
 		assertEquals(String.format("%10f", 10.5), " 10.500000");
 		assertEquals(String.format("%-10f", 10.5), "10.500000 ");
-		assertEquals(String.format("%#10f", 10.5), " 10.500000");
-		assertEquals(String.format("%#10f", 10.0), " 10.000000");
 
-	    // signPlus
+		// alternate form
+		assertEquals(String.format("%#10f", 10.5), " 10.500000");
+		assertEquals(String.format("%10.0f", 12345.0), "     12345");
+		assertEquals( String.format("%#10.0f", 12345.0), "    12345." );
+
+		// signPlus
 	    assertEquals( String.format("%+10f", 10.5), "+10.500000" );
 
 	    // singSpace
