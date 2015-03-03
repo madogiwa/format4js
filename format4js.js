@@ -428,7 +428,7 @@
             str = this.formatSignSpace(str, num);
         }
         if (flags.groupingSeparator) {
-            str = this.formatGroupingSepartor(str);
+            str = this.formatGroupingSeparator(str);
         }
         if (flags.surroundNegative) {
             str = this.formatSurroundNegative(str, num);
@@ -463,7 +463,7 @@
         throw new Error('format flags conversion mismatch: sign space is not supported in integer conversion.');
     };
 
-    IntegerConverter.prototype.formatGroupingSepartor = function(str) {
+    IntegerConverter.prototype.formatGroupingSeparator = function(str) {
         throw new Error('format flags conversion mismatch: grouping separator is not supported in integer conversion.');
     };
 
@@ -510,7 +510,7 @@
         }
     };
 
-    DecimalConverter.prototype.formatGroupingSepartor = function(str) {
+    DecimalConverter.prototype.formatGroupingSeparator = function(str) {
         var s = '';
         for(var i = str.length; i > 3; i -= 3) {
             s = ',' + str.substring(i-3, i) + s;
@@ -587,7 +587,7 @@
             str = this.formatSignSpace(str, num);
         }
         if (flags.groupingSeparator) {
-            str = this.formatGroupingSepartor(str);
+            str = this.formatGroupingSeparator(str);
         }
         if (flags.surroundNegative) {
             str = this.formatSurroundNegative(str, num);
@@ -638,7 +638,7 @@
         }
     };
 
-    AbstractFloatConverter.prototype.formatGroupingSepartor = function(str) {
+    AbstractFloatConverter.prototype.formatGroupingSeparator = function(str) {
         var integerPart = str.substring(0, str.indexOf('.'));
         var floatingPart = str.substring(str.indexOf('.')+1, str.length);
 
@@ -695,7 +695,7 @@
         return this.format(num, str, flags, width);
     };
 
-    ExponentialConverter.prototype.formatGroupingSepartor = function(str, num) {
+    ExponentialConverter.prototype.formatGroupingSeparator = function(str, num) {
         throw new Error('format flags conversion mismatch: grouping separator is not supported in exponential conversion.');
     };
 
@@ -881,7 +881,7 @@
         }
     };
 
-    HexadecimalFloatConverter.prototype.formatGroupingSepartor = function(str) {
+    HexadecimalFloatConverter.prototype.formatGroupingSeparator = function(str) {
         throw new Error('format flags conversion mismatch: grouping separator is not supported in hexadecimal float conversion.');
     };
 
