@@ -265,7 +265,7 @@
 
     DateAndTimeConverter.prototype.format = function(str, flags, width) {
         if (flags.alternateForm) {
-            throw new Error('FormatFlagsConversionMismatch');
+            throw new Error('format flags conversion mismatch: alternative form is not supported in date and time conversion.');
         }
 
         if (width && str.length < width) {
@@ -307,7 +307,7 @@
 
     BooleanConverter.prototype.format = function(str, flags, width) {
         if (flags.alternateForm) {
-            throw new Error('FormatFlagsConversionMismatch');
+            throw new Error('format flags conversion mismatch: alternative form is not supported in boolean conversion.');
         }
 
         if (width && str.length < width) {
@@ -356,7 +356,7 @@
 
     AbstractCharacterConverter.prototype.format = function(str, flags, width) {
         if (flags.alternateForm) {
-            throw new Error('FormatFlagsConversionMismatch');
+            throw new Error('format flags conversion mismatch: alternative form is not supported in character conversion.');
         }
 
         if (width && str.length < width) {
@@ -456,23 +456,23 @@
     };
 
     IntegerConverter.prototype.formatSignPlus = function(str, num) {
-        throw new Error('FormatFlagsConversionMismatch');
+        throw new Error('format flags conversion mismatch: sign plus is not supported in integer conversion.');
     };
 
     IntegerConverter.prototype.formatSignSpace = function(str, num) {
-        throw new Error('FormatFlagsConversionMismatch');
+        throw new Error('format flags conversion mismatch: sign space is not supported in integer conversion.');
     };
 
     IntegerConverter.prototype.formatGroupingSepartor = function(str) {
-        throw new Error('FormatFlagsConversionMismatch');
+        throw new Error('format flags conversion mismatch: grouping separator is not supported in integer conversion.');
     };
 
     IntegerConverter.prototype.formatSurroundNegative = function(str, num) {
-        throw new Error('FormatFlagsConversionMismatch');
+        throw new Error('format flags conversion mismatch: surround negative is not supported in integer conversion.');
     };
 
     IntegerConverter.prototype.formatAlternateForm = function(str) {
-        throw new Error('FormatFlagsConversionMismatch');
+        throw new Error('format flags conversion mismatch: alternate form is not supported in integer conversion.');
     };
 
 
@@ -696,7 +696,7 @@
     };
 
     ExponentialConverter.prototype.formatGroupingSepartor = function(str, num) {
-        throw new Error('FormatFlagsConversionMismatch');
+        throw new Error('format flags conversion mismatch: grouping separator is not supported in exponential conversion.');
     };
 
     ExponentialConverter.prototype.toExponential = function(exp, precision) {
@@ -795,7 +795,7 @@
     };
 
     ComputerizedConverter.prototype.formatAlternateForm = function(str) {
-        throw new Error('FormatFlagsConversionMismatch');
+        throw new Error('format flags conversion mismatch: alternative form is not supported in computerized conversion.');
     };
 
     ComputerizedConverter.prototype.toExponential = function(exp, precision) {
@@ -882,11 +882,11 @@
     };
 
     HexadecimalFloatConverter.prototype.formatGroupingSepartor = function(str) {
-        throw new Error('Format flags conversion mismatch');
+        throw new Error('format flags conversion mismatch: grouping separator is not supported in hexadecimal float conversion.');
     };
 
     HexadecimalFloatConverter.prototype.formatSurroundNegative = function(str) {
-        throw new Error('Format flags conversion mismatch');
+        throw new Error('format flags conversion mismatch: surround negative is not supported in hexadecimal float conversion.');
     };
 
 
@@ -928,7 +928,7 @@
 
     LineSeparatorConverter.prototype.format = function(str, flags, width) {
         if (width >= 0) {
-            throw new Error('IllegalFormatWidth');
+            throw new Error('illegal format width: ' + width);
         }
 
         return str;
@@ -1012,7 +1012,7 @@
             replaced = converter.convert(precision, flags, width);
         } else {
             if (index >= this.args.length || index < 0) {
-                throw new Error('Missing argument.');
+                throw new Error("missing argument '$" + index + "'");
             }
             var argument = this.args[index];
 
@@ -1022,7 +1022,7 @@
             } else {
                 var converter = genericConverters[conversion.charAt(0)];
                 if (converter === undefined) {
-                    throw new Error('Unknown conversion');
+                    throw new Error("unknown conversion '" + conversion.charAt(0) + "'");
                 }
                 replaced = converter.convert(argument, precision, flags, width, conversion);
             }
@@ -1053,7 +1053,7 @@
 
         // duplication check
         if (this.hasDuplication(str)) {
-            throw new Error('has duplication flag.');
+            throw new Error('has duplication in flags: ' + str);
         }
 
         for(var i = 0; i < str.length; i++) {
@@ -1081,13 +1081,16 @@
                 flags.surroundNegative = true;
                 break;
               default:
-                throw new Error('Unknown format flag. flag: ' + c);
+                throw new Error("unknown format flag: '" + c + "'");
             }
         }
 
-        if ((flags.signPlus && flags.signSpace) ||
-            (flags.leftAlign && flags.zeroPadding)) {
-            throw new Error("Illegal format flags. flag: '+' & ' '");
+        if (flags.signPlus && flags.signSpace) {
+            throw new Error("illegal format flags: '+' & ' '");
+        }
+
+        if (flags.leftAlign && flags.zeroPadding) {
+            throw new Error("illegal format flags: '-' & '0'");
         }
 
         return flags;
