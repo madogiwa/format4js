@@ -738,9 +738,9 @@
     };
 
     FloatConverter.prototype.toFloat = function(num, precision) {
-		
-		var roundedNumber = Math.round(num*Math.pow(10,precision)) / Math.pow(10,precision);
-		
+        
+        var roundedNumber = Math.round(num*Math.pow(10,precision)) / Math.pow(10,precision);
+        
         var str = roundedNumber.toString();
         var point = str.indexOf('.');
 
@@ -748,7 +748,7 @@
         var floatingPart = (point != -1) ? str.substring(point+1, str.length) : '';
 
         var len = floatingPart.length;
-		if (len < precision) {
+        if (len < precision) {
             floatingPart = paddingRight(floatingPart, '0', precision);
         }
 
