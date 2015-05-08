@@ -738,19 +738,17 @@
     };
 
     FloatConverter.prototype.toFloat = function(num, precision) {
-        var str = num.toString();
+        
+        var roundedNumber = Math.round(num*Math.pow(10,precision)) / Math.pow(10,precision);
+        
+        var str = roundedNumber.toString();
         var point = str.indexOf('.');
 
         var integerPart = (point != -1) ? str.substring(0, point) : str;
         var floatingPart = (point != -1) ? str.substring(point+1, str.length) : '';
 
         var len = floatingPart.length;
-        if (len > precision) {
-            floatingPart = floatingPart.substring(0, precision) + '.' +
-                floatingPart.substring(precision, precision + 1);
-            floatingPart = Math.round(floatingPart).toString();
-            floatingPart = paddingLeft(floatingPart, '0', precision);
-        } else if (len < precision) {
+        if (len < precision) {
             floatingPart = paddingRight(floatingPart, '0', precision);
         }
 

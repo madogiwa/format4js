@@ -215,7 +215,7 @@ test('eE - decimal number in computerized scientific notation', function() {
 });
 
 test('f - float', function() {
-    expect(16);
+    expect(23);
 
     equals( jQuery.format('%f', 10.5), '10.500000' );
     equals( jQuery.format('%f', -10.5), '-10.500000' );
@@ -225,6 +225,16 @@ test('f - float', function() {
     equals( jQuery.format('%03.2f', 10.025678), '10.03' );
     equals( jQuery.format('%03.2f', 10.085678), '10.09' );
     equals( jQuery.format('%03.2f', 10.0000085678), '10.00' );
+
+    equals( jQuery.format('%.0f', 10.0000085678), '10' );
+    equals( jQuery.format('%.0f', 10.9), '11' );
+    equals( jQuery.format('%.1f', 10.09), '10.1');
+    equals( jQuery.format('%.1f', 10.99), '11.0');
+
+    equals( jQuery.format('%.0f', 10), '10');
+    equals( jQuery.format('%.0f', 10.0000), '10');
+    equals( jQuery.format('%.0f', 10.00001), '10');
+	
 
     // format
     equals( jQuery.format('%10f', 10.5), ' 10.500000' );
