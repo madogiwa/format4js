@@ -689,7 +689,7 @@
         }
 
         var num = parseFloat(argument);
-        var exp = this.normalize(num, precision);
+        var exp = this.normalize(num, precision + 1);
         var str = this.toExponential(exp, precision);
 
         return this.format(num, str, flags, width);
@@ -700,20 +700,7 @@
     };
 
     ExponentialConverter.prototype.toExponential = function(exp, precision) {
-        var offset = 2;
-
-        var real = exp.real;
-        if (!real.match(/\./)) {
-            real = real + '.';
-        }
-        if (real < 0) {
-            offset += 1;
-        }
-
-        real = real.substring(0, precision + offset);
-        real = paddingRight(real, '0', precision + offset);
-
-        return real + 'e' + exp.sign + paddingLeft(exp.base, '0', 2);
+        return exp.real + 'e' + exp.sign + paddingLeft(exp.base, '0', 2);
     };
 
 

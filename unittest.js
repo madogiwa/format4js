@@ -186,10 +186,15 @@ test('xX - hexadecimal integer', function() {
 });
 
 test('eE - decimal number in computerized scientific notation', function() {
-    expect(11);
+    expect(15);
 
     equals( jQuery.format('%e', 1000.0), '1.000000e+03' );
     equals( jQuery.format('%E', 1000.0), '1.000000E+03' );
+
+    equals( jQuery.format('%.0e', 10.0000085678), '1e+01' );
+    equals( jQuery.format('%.0e', 10.9), '1e+01' );
+    equals( jQuery.format('%.1e', 10.09), '1.0e+01');
+    equals( jQuery.format('%.1e', 10.99), '1.1e+01');
 
     // format
     equals( jQuery.format('%15e', 1000.0), '   1.000000e+03' );
