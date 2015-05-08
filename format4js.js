@@ -662,10 +662,10 @@
         }
     };
 
-    AbstractFloatConverter.prototype.normalize = function(num) {
+    AbstractFloatConverter.prototype.normalize = function(num, precision) {
         var exp = {};
 
-        var vals = num.toExponential().split(/e/);
+        var vals = num.toExponential(precision - 1).split(/e/);
         exp.real = vals[0];
         exp.sign = vals[1].charAt(0);
         exp.base = vals[1].substring(1, vals[1].length);
@@ -689,7 +689,7 @@
         }
 
         var num = parseFloat(argument);
-        var exp = this.normalize(num);
+        var exp = this.normalize(num, precision);
         var str = this.toExponential(exp, precision);
 
         return this.format(num, str, flags, width);
@@ -738,9 +738,8 @@
     };
 
     FloatConverter.prototype.toFloat = function(num, precision) {
-        
-        var roundedNumber = Math.round(num*Math.pow(10,precision)) / Math.pow(10,precision);
-        
+        var roundedNumber = Math.round(num * Math.pow(10, precision)) / Math.pow(10, precision);
+
         var str = roundedNumber.toString();
         var point = str.indexOf('.');
 
@@ -779,11 +778,10 @@
             precision = 1;
         }
 
-        var num = parseFloat(argument);
-        var exp = this.normalize(num);
-
-        var converted = '';
-        if (exp.base > precision) {
+        var exp = this.normalize(parseFloat(argument), precision);
+        var num = this.exponentialToFloatValue(exp);
+        if (Math.abs(num) < Math.pow(10, -4) ||
+            Math.abs(num) >= Math.pow(10, precision)) {
             converted = this.toExponential(exp, precision);
         } else {
             converted = this.toFloat(num, precision);
@@ -797,49 +795,16 @@
     };
 
     ComputerizedConverter.prototype.toExponential = function(exp, precision) {
-        var offset = 0;
-        var real = exp.real;
-        if (real.match(/\./)) {
-            offset++;
-        }
-        real = real.substring(0, precision + offset);
-
-        if (real.length < precision) {
-            if (!real.match(/\./)) {
-                real = real + '.';
-            }
-            real = paddingRight(real, '0', precision + 2);
-        }
-
-        return real + 'e' + exp.sign + paddingLeft(exp.base, '0', 2);
+        return exp.real + 'e' + exp.sign + paddingLeft(exp.base, '0', 2);
     };
 
     ComputerizedConverter.prototype.toFloat = function(num, precision) {
-        var str = num.toString();
-        var sig = str.replace(/\./, '');
-
-        var offset = (sig.match(/^-/)) ? 1 : 0;
-        var len = sig.length - offset;;
-        if (len > precision) {
-            sig = sig.substring(0, precision + offset) + '.' + sig.substring(precision + offset, sig.length);
-            sig = Math.round(parseFloat(sig)).toString();
-        } else if (len < precision) {
-            sig = paddingRight(sig, '0', precision + offset);
-        }
-
-
-        var point = str.indexOf('.');
-        var integerPart = sig.substring(0, point);
-        var floatingPart = sig.substring(point, sig.length);
-
-        var result = '';
-        if (floatingPart.length > 0) {
-            result = integerPart + '.' + floatingPart;
-        } else {
-            result = integerPart;
-        }
-        return result;
+        return num.toPrecision(precision);
     };
+
+    ComputerizedConverter.prototype.exponentialToFloatValue = function(exp, precision) {
+        return exp.real * Math.pow(10, parseInt(exp.sign + exp.base));
+    }
 
 
     /*

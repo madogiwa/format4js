@@ -234,7 +234,6 @@ test('f - float', function() {
     equals( jQuery.format('%.0f', 10), '10');
     equals( jQuery.format('%.0f', 10.0000), '10');
     equals( jQuery.format('%.0f', 10.00001), '10');
-	
 
     // format
     equals( jQuery.format('%10f', 10.5), ' 10.500000' );
@@ -263,7 +262,7 @@ test('f - float', function() {
 });
 
 test('gG - computerized scientific notation or decimal format', function() {
-    expect(13);
+    expect(21);
 
     equals( jQuery.format('%g', 3.14159), '3.14159' );
     equals( jQuery.format('%.9G', 3.14159), '3.14159000' );
@@ -271,6 +270,17 @@ test('gG - computerized scientific notation or decimal format', function() {
     equals( jQuery.format("%g", 100000.1), "100000" );
     equals( jQuery.format("%g", 1000000000.1), "1.00000e+09" );
     equals( jQuery.format("%.10g", 1000000000.1), "1000000000" );
+
+    equals( jQuery.format('%.1g', 10000.1), '1e+04' );
+    equals( jQuery.format('%.2g', 10000.1), '1.0e+04' );
+
+    equals( jQuery.format('%.4g', 9999), '9999' );
+    equals( jQuery.format('%.4g', 10000), '1.000e+04' );
+    equals( jQuery.format('%.4g', 0.0001), '0.0001000' );
+    equals( jQuery.format('%.4g', 0.00009), '9.000e-05' );
+
+    equals( jQuery.format('%.0g', 1.9), '2' );
+    equals( jQuery.format('%.1g', 1.9), '2' );
 
     // format
     equals( jQuery.format('%8g', 3.14159), ' 3.14159' );
