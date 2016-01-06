@@ -1,0 +1,25 @@
+{
+  "name": "format4js",
+  "version": "0.1.0",
+  "description": "Java's String.format() compatible string formatting library for JavaScript.",
+  "keywords": [
+    "format"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "qunit -c format4js.js -t unittest.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madogiwa/format4js.git"
+  },
+  "author": "Hidenori Sugiyama <madogiwa@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/madogiwa/format4js/issues"
+  },
+  "homepage": "https://github.com/madogiwa/format4js#readme",
+  "devDependencies": {
+    "qunit": "~0.7.7"
+  }
+}
