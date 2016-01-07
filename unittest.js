@@ -342,6 +342,8 @@ test('aA - hexadecimal floating-point number', function() {
 test('tT - date and time (foundamental)', function() {
     expect(18);
 
+    var offset = new Date().getTimezoneOffset();
+
     var date = new Date(1981, 8, 2, 4, 5, 6, 98);
     var date2 = new Date(1982, 11, 5, 14, 15, 6, 98);
 
@@ -362,13 +364,13 @@ test('tT - date and time (foundamental)', function() {
     equal( mdgw.format('%tp', date), 'am' );
     equal( mdgw.format('%Tp', date2), 'PM' );
 
-    equal( mdgw.format('%tz', date), '+0900' );
+    ok( mdgw.format('%tz', date).match(/^[+-][01]\d\d\d$/) );
 
     // original behaviour - timezone is not supported
     raises(function(){ mdgw.format('%tZ', date) });
 
-    equal( mdgw.format('%ts', date), '368219106' );
-    equal( mdgw.format('%tQ', date), '368219106098' );
+    equal( mdgw.format('%ts', date), (368251506 + offset * 60).toString() );
+    equal( mdgw.format('%tQ', date), (368251506098 + offset * 60 * 1000).toString() );
 
     // format
     equal( mdgw.format('%5tH', date), '   04' );
