@@ -8,13 +8,23 @@ Java's String.format() compatible string formatting library for JavaScript.
 ## License
 [MIT License](http://opensource.org/licenses/mit-license.php)
 
-## How to Use
-Include JavaScript library.
+## Install
+### Node.js
+```sh
+npm install format4js
+```
+```javascript
+require('format4js');
+```
+
+### HTML
+Download [files](https://github.com/madogiwa/format4js/releases) and add following into HTML.
 
 ```html
 <script src="format4js.js"></script>
 ```
 
+## Usage
 The format4js extends String class to add format() method.
 You can call format() as static and instance method.
 
