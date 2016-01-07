@@ -89,7 +89,7 @@ test('cC - character', function() {
 });
 
 test('d - decimal integer', function() {
-    expect(16);
+    expect(19);
 
     equal( mdgw.format('%d', 10), '10' );
     equal( mdgw.format('%03d', 10), '010' );
@@ -118,6 +118,9 @@ test('d - decimal integer', function() {
     // groupSeparator
     equal( mdgw.format('%,5d', 10), '   10' );
     equal( mdgw.format('%,6d', 1000), ' 1,000' );
+    equal( mdgw.format('%,12d', -100000), '    -100,000' );
+    equal( mdgw.format('%,12d', -1000000), '  -1,000,000' );
+    equal( mdgw.format('%,12d', -10000000), ' -10,000,000' );
 
     // surroundNegative
     equal( mdgw.format('%(5d', 10), '   10' );
@@ -270,7 +273,7 @@ test('f - float', function() {
 });
 
 test('gG - computerized scientific notation or decimal format', function() {
-    expect(21);
+    expect(24);
 
     equal( mdgw.format('%g', 3.14159), '3.14159' );
     equal( mdgw.format('%.9G', 3.14159), '3.14159000' );
@@ -307,6 +310,9 @@ test('gG - computerized scientific notation or decimal format', function() {
 
     // groupSeparator
     equal( mdgw.format("%,10g", 3000.14159), "  3,000.14" );
+    equal( mdgw.format("%,10g", -3000.14159), " -3,000.14" );
+    equal( mdgw.format("%,10g", -30000.14159), " -30,000.1" );
+    equal( mdgw.format("%,10g", -300000.14159), "  -300,000" );
 
     // surroundNegative
     equal( mdgw.format("%(10g", -3.14159), " (3.14159)" );

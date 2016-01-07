@@ -153,6 +153,9 @@ public class FormatTest {
 		// groupSeparator
 		assertEquals(String.format("%,5d", 10), "   10");
 		assertEquals(String.format("%,6d", 1000), " 1,000");
+		assertEquals(String.format("%,12d", -100000), "    -100,000");
+		assertEquals(String.format("%,12d", -1000000), "  -1,000,000");
+		assertEquals(String.format("%,12d", -10000000), " -10,000,000");
 
 		// surroundNegative
 		assertEquals(String.format("%(5d", 10), "   10");
@@ -365,6 +368,9 @@ public class FormatTest {
 
 	    // groupSeparator
 	    assertEquals( String.format("%,10g", 3000.14159), "  3,000.14" );
+	    assertEquals( String.format("%,10g", -3000.14159), " -3,000.14" );
+	    assertEquals( String.format("%,10g", -30000.14159), " -30,000.1" );
+	    assertEquals( String.format("%,10g", -300000.14159), "  -300,000" );
 
 	    // surroundNegative
 	    assertEquals( String.format("%(10g", -3.14159), " (3.14159)" );
