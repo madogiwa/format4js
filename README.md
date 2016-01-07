@@ -1,5 +1,7 @@
-format4js
+format4js 
 =========
+[![npm version](https://badge.fury.io/js/format4js.svg)](https://badge.fury.io/js/format4js)
+[![Build Status](https://travis-ci.org/madogiwa/format4js.svg?branch=master)](https://travis-ci.org/madogiwa/format4js)
 
 Java's String.format() compatible string formatting library for JavaScript.
 
