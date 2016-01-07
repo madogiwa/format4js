@@ -73,6 +73,12 @@
         return (str + multiplePush(Array(), pad, len).join('')).slice(0, len);
     }
 
+    function insertThousandsSeparator(str, separator) {
+        var offset = str.length % 3;
+        var array = str.slice(offset).split(/(.{3})/);
+        array.unshift(str.slice(0, offset));
+        return array.filter(Boolean).join(separator);
+    }
 
     /*
      * String representation of date
@@ -418,6 +424,9 @@
     };
 
     IntegerConverter.prototype.format = function(num, str, flags, width) {
+        if (flags.groupingSeparator) {
+            str = this.formatGroupingSeparator(str);
+        }
         if (flags.alternateForm) {
             str = this.formatAlternateForm(str);
         }
@@ -426,9 +435,6 @@
         }
         if (flags.signSpace) {
             str = this.formatSignSpace(str, num);
-        }
-        if (flags.groupingSeparator) {
-            str = this.formatGroupingSeparator(str);
         }
         if (flags.surroundNegative) {
             str = this.formatSurroundNegative(str, num);
@@ -511,11 +517,9 @@
     };
 
     DecimalConverter.prototype.formatGroupingSeparator = function(str) {
-        var s = '';
-        for(var i = str.length; i > 3; i -= 3) {
-            s = ',' + str.substring(i-3, i) + s;
-        }
-        return str.substring(0, i) + s;
+        var sign = (str.indexOf('-') === 0) ? 1 : 0;
+        var s = insertThousandsSeparator(str.slice(sign), ',');
+        return (sign === 0) ? s : '-' + s;
     };
 
     DecimalConverter.prototype.formatSurroundNegative = function(str, num) {
@@ -577,6 +581,9 @@
     };
 
     AbstractFloatConverter.prototype.format = function(num, str, flags, width) {
+        if (flags.groupingSeparator) {
+            str = this.formatGroupingSeparator(str);
+        }
         if (flags.alternateForm) {
             str = this.formatAlternateForm(str);
         }
@@ -585,9 +592,6 @@
         }
         if (flags.signSpace) {
             str = this.formatSignSpace(str, num);
-        }
-        if (flags.groupingSeparator) {
-            str = this.formatGroupingSeparator(str);
         }
         if (flags.surroundNegative) {
             str = this.formatSurroundNegative(str, num);
@@ -639,18 +643,17 @@
     };
 
     AbstractFloatConverter.prototype.formatGroupingSeparator = function(str) {
-        var integerPart = str.substring(0, str.indexOf('.'));
-        var floatingPart = str.substring(str.indexOf('.')+1, str.length);
+        var pair = str.split('.');
 
-        var s = '';
-        for(var i = integerPart.length; i > 3; i -= 3) {
-            s = ',' + integerPart.substring(i-3, i) + s;
-        }
+        var integerPart = pair[0];
+        var sign = (integerPart.indexOf('-') === 0) ? 1 : 0;
+        var s = insertThousandsSeparator(integerPart.slice(sign), ',');
+        s =  (sign === 0) ? s : '-' + s;
 
-        if (floatingPart) {
-            return str.substring(0, i) + s + '.' + floatingPart;
+        if (pair.length == 2) {
+            return s + '.' + pair[1];
         } else {
-            return str.substring(0, i) + s;
+            return s;
         }
     };
 
