@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Java's String.format() compatible string formatting library for JavaScript.",
   "keywords": [
-    "format"
+    "format",
+    "sprintf"
   ],
   "main": "index.js",
   "scripts": {
