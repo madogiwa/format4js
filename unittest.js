@@ -220,7 +220,7 @@ test('eE - decimal number in computerized scientific notation', function() {
 });
 
 test('f - float', function() {
-    expect(23);
+    expect(26);
 
     equal( mdgw.format('%f', 10.5), '10.500000' );
     equal( mdgw.format('%f', -10.5), '-10.500000' );
@@ -260,6 +260,9 @@ test('f - float', function() {
 
     // groupSeparator
     equal( mdgw.format("%,14f", 1000.5), "  1,000.500000" );
+    equal( mdgw.format("%,.2f", -401798.08), "-401,798.08" );
+    equal( mdgw.format("%,.2f", -4017980.08), "-4,017,980.08" );
+    equal( mdgw.format("%,.2f", -40179800.08), "-40,179,800.08" );
 
     // surroundNegative
     equal( mdgw.format("%(12f", -10.5), " (10.500000)" );

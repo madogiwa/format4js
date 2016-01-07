@@ -326,6 +326,9 @@ public class FormatTest {
 
 	    // groupSeparator
 	    assertEquals( String.format("%,14f", 1000.5), "  1,000.500000" );
+	    assertEquals( String.format("%,.2f", -401798.08), "-401,798.08" );
+	    assertEquals( String.format("%,.2f", -4017980.08), "-4,017,980.08" );
+	    assertEquals( String.format("%,.2f", -40179800.08), "-40,179,800.08" );
 
 	    // surroundNegative
 	    assertEquals( String.format("%(12f", -10.5), " (10.500000)" );
