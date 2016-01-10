@@ -77,7 +77,14 @@
         var offset = str.length % 3;
         var array = str.slice(offset).split(/(.{3})/);
         array.unshift(str.slice(0, offset));
-        return array.filter(Boolean).join(separator);
+
+        var res = [];
+        for (var i = 0; i < array.length; i++) {
+            if (array[i]) {
+                res.push(array[i]);
+            }
+        }
+        return res.join(separator);
     }
 
     /*
