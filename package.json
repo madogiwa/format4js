@@ -4,6 +4,8 @@
   "description": "Java's String.format() compatible string formatting library for JavaScript.",
   "keywords": [
     "format",
+    "string",
+    "java",
     "sprintf"
   ],
   "main": "index.js",
